@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testsimple
+  labels:
+    app: testsimple
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testsimple
+  template:
+    metadata:
+      labels:
+        app: testsimple
+    spec:
+      containers:
+      - name: testsimple
+        image: mehike/testsimple:1.1
+        ports:
+        - containerPort: 8091
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-name
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb
+              key: database-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb
+              key: database-password
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-host
+        - name: POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-port

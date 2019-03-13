@@ -1,0 +1,54 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: testsimple
+  h2.console.enabled: true
+  jpa:
+    generate-ddl: true
+    show-sql: true 
+    database: default
+    properties:
+      hibernate: 
+        jdbc.lob.non_contextual_creation: true
+        temp.use_jdbc_metadata_defaults: false
+        generate_statistics: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: create-drop
+postgres:
+  datasource:
+    url: jdbc:postgresql://postgres:${POSTGRES_SERVICE_PORT}/${POSTGRES_DB}?currentSchema=public 
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+postgres2:
+  datasource:
+    url: jdbc:postgresql://postgres2:${POSTGRES2_PORT}/${POSTGRES2_DB}?currentSchema=public 
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+eureka:
+  instance:
+    hostname: eureka
+    port: 8061
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+        stat: true

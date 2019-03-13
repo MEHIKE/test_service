@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: slave01.babywatcher.eu.
+  name: testsimple
+  labels:
+    app: testsimple
+spec:
+  externalIPs:
+  - 192.168.1.156
+  - 88.196.63.92
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8091
+  selector:
+    app: testsimple
+  type: NodePort
