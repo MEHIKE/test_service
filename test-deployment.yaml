@@ -45,3 +45,13 @@ spec:
             configMapKeyRef:
               name: postgresdb
               key: database-port
+        volumeMounts:
+        - mountPath: /data/assets
+          name: test-volume
+      volumes:
+      - name: test-volume
+        hostPath: 
+          path: /tmp/app-data
+          type: Directory
+      #nodeSelector:
+      #  big-streaming-storage: "true"
